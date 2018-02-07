@@ -1,20 +1,22 @@
---设置名称
+--璁剧疆鍚嶇О
 git config --global user.name "yewenlong100"
---设置账号
+--璁剧疆璐﹀彿
 git config --global user.email "1063963627@qq.com"
---查看秘钥
+--鏌ョ湅绉橀挜
 cd ~/.ssh
---生成秘钥
+--鐢熸垚绉橀挜
 ssh-keygen -t rsa -C "1063963627@qq.com"
 
---上传本地代码
+--涓婁紶鏈湴浠ｇ爜
 git init
 git add .
-git commit -m "提交文件"
+git commit -m "鎻愪氦鏂囦欢"
 git remote add origin https://github.com/yewenlong100/Project.git
 git push -u origin master
 
---SSL_ERROR_SYSCALL异常处理
-
+--SSL_ERROR_SYSCALL寮傚父澶勭悊
+--鏂规硶1
+git config http.postBuffer 524288000
+--鏂规硶2
 git config --global https.postBuffer 1048576000
 git config http.sslVerify "false"
