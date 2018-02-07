@@ -1,0 +1,32 @@
+CREATE PARTITION FUNCTION [bgPartitionFun](int) AS RANGE LEFT FOR VALUES (N'10', N'20', N'30', N'40', N'50', N'60', N'70', N'80', N'90', N'100')
+
+
+CREATE PARTITION SCHEME [bgPartitionSchema] AS PARTITION [bgPartitionFun] TO ([PRIMARY], [ByIdGroup1], [ByIdGroup2], [ByIdGroup3], [ByIdGroup4], [ByIdGroup5], [ByIdGroup6], [ByIdGroup7], [ByIdGroup8], [ByIdGroup9], [ByIdGroup10])
+
+
+CREATE TABLE t_user_c
+([pid] int NOT NULL IDENTITY(1,1) ,
+[deptid] int NOT NULL ,
+[username] nvarchar(50) NOT NULL ,
+[usernums] nvarchar(50) NOT NULL ,
+[usercode] nvarchar(10) NULL ,
+[usermail] nvarchar(50) NULL ,
+[useri18n] nvarchar(8) NULL ,
+[assouuid] nchar(22) NULL ,
+[remark] nvarchar(200) NULL ,
+[rdtime] datetime NULL ,
+[rduser] int NULL ,
+[Archived] int NULL ,
+[rdmark] nchar(1) NULL ,
+[isquit] char(1) NULL DEFAULT ((0)) ) 
+ON bgPartitionSchema (Archived)
+
+
+SELECT * FROM sys.partitions 
+WHERE OBJECT_NAME(OBJECT_ID)='t_user_c';
+
+
+UPDATE t_user_c set Archived = pid 
+
+
+

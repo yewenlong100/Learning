@@ -1,0 +1,120 @@
+38服务器密码：EManadmin123
+
+WIKI:http://192.168.1.253:8089/confluence/pages/viewpage.action?pageId=92373049
+
+
+7.3版本注册码：ZW1hbiNOakF0UVRRdE5FTXRNelF0UWpFdE9EVT0jMS8xLzE3I3NpeCMwMDgwMDAwMDg=#MCwCFB/gNpp0DVQAF7EtgfdH9jfYasiqAhRhadaSbsaszfuyVABdWTBcn8HpGA==
+
+
+删除webapp下面的原来的EMan
+改两个pool文件
+修改pool文件的IP和数据库名字
+用户表Login
+查看管理员权限
+SELECT Login.loginID, Login.loginPassword
+FROM UserFunctionOfRole INNER
+    JOIN LoginOfRole ON LoginOfRole.roleID = UserFunctionOfRole.roleID INNER
+    JOIN Login ON Login.loginID = LoginOfRole.loginID
+WHERE (userFunctionName = '修改角色权限')
+
+ 叶文龙：
+jira账号：          ywl         123456
+wiki账号：         ywl         123456
+
+mysql账号：admin123  admin
+
+ywl@oureman.com   Qq13407297794
+
+
+wiki账号：wpj   321456
+
+fas:
+
+81c9883fdc5b388ff3b8e019a08c4547
+
+
+svn：ywl = 321524
+
+电脑密码：5360
+
+
+STMP第3方授权码
+lmcwyswgoahrbfgb
+
+输入命令：netstat -ano，列出所有端口的情况
+
+
+所有的文件夹不允许有中文！！！！！！！！！！！！
+
+所有标签必须闭合, 包括 br (<br />), hr(<hr />)
+必须为含有描述性表单元素(input, textarea)添加label.
+<p>
+    <label for="name">姓名: </label>
+    <input type="text" id="name" />
+</p> 
+
+Border
+    语法：  border:width  style  color ;  示例：1px solid red;
+
+
+
+<button type="button">普通按钮</button>
+<button type="reset">重置按钮</button>
+<button type="submit">提交按钮</button> 
+
+
+static 方法直接用类名调用，非static方法用类的对象调用
+
+
+（3）Libraries：用于添加第三方jar包；  
+说明：  
+Add External Jars（用于加载工程外的jar）---可以选择相应的jar包，如MyEclipse驱动等等； 
+Add Jars：用于添加本工程内的jar包（推荐使用这种方式，因为jar在工程内，方便移植）
+
+调试窗口和java窗口切换在右上角
+
+int   4字节、32位、范围为-2^32 ~ 2^32 - 1
+
+myeclipse查找：
+Ctrl+Shift+R:输入字母查找文件
+Ctrl+F:在一个文件中查找字符
+Ctrl+Shift+T :搜索类
+Ctrl+O:显示该类的所有变量和方法
+
+
+
+left join（左连接）包含所有的左边表中的记录甚至是右边表中没有和它匹配的记录。
+select * from tbl1 Left Join tbl2 where tbl1.ID = tbl2.ID
+
+-- 建表时添加主键
+create table exampleTable( pkCol nvarchar(12), constraint PK_exampleTable primary key nonclustered(pkCol) ); 
+-- 建表后添加主键alter table exampleTable add constraint PK_exampleTable primary key nonclustered(pkCol); 
+
+模糊查询用like   '   '
+
+同一个事务内SQL异常只能捕获一次，建议不要在事务调用的方法中捕获异常，而应该将此异常抛出，在最顶层做统一处理，应尽量避免如下形式的代码。
+
+同一个事务必须在一个数据库链接中处理，即不允许出现如下形式的事务处理代码。
+
+操作多条SQL用一个事务解决！！！！！！！！！！
+
+存储过程： 存储过程是SQL 语句和可选控制流语句的预编译集合，以一个名称存储并作为一个单元处理。
+@是用户变量 @@是系统变量
+
+
+
+
+在Console显示提示用log4j.info(" ")和log4j.error(" ")
+
+
+
+<%=request.getSession().getServletContext().getAttribute("version") %>
+c标签和EL表达式：
+<c:when test="${customizeFlag=='HM'}">
+
+java里面的SQL语句换行的话在上一行的”前面加空格
+java里面对那个字段有疑问就输出哪个字段System.out.println();
+
+查看代码差距的时候，红色是以前的代码，绿色是改后的代码/
+
+document.getElementById("box").style.display="block";

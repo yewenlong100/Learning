@@ -1,0 +1,98 @@
+<div id="comprehensive_designrate_rateData" class="calc-h4x">
+
+</div>
+<@c.pager bean=(beans.pagination)?if_exists form=".em-search-form" />
+<script src="../styles/plugin/js/echarts.min.js"></script>
+<script type="text/javascript">
+var myChart = echarts.init(document.getElementById('comprehensive_designrate_rateData'));
+var xdata = [];
+var data = [];
+
+<#list date?if_exists as str>
+	<#if str!=''>
+		xdata.push('${str}');
+	</#if>	
+</#list>
+	
+
+<#list hour?if_exists as strs>
+	<#if strs!=''>
+		data.push('${strs}');
+	</#if>		
+</#list>
+var option = {
+        title: {
+            text: '设计进度'
+        },
+        //鼠标放上去显示
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                animation: false,
+                label: {
+                    backgroundColor: '#505765'
+                }
+            },
+            confine: true 
+        },
+        legend: {
+            data:['产品日期对应工时']
+        },
+        xAxis: {
+            data: xdata,
+            axisLabel:{  
+                interval:0,  
+                rotate:45,//倾斜度 -90 至 90 默认为0  
+                margin:2,  
+                textStyle:{  
+                    fontWeight:"bolder",  
+                    color:"#000000"
+              
+                }  
+            }  
+        },
+        yAxis: {},
+        series: [{
+            name: '工时',
+            type: 'bar',
+            data: data
+        }],
+        //x轴字体高度
+        grid: {  
+            y2: 140  
+        },
+        //下载、切换
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {},
+                magicType: {
+	                type: ['line', 'tiled']
+	            }
+            }
+        },
+        //滚动条
+        dataZoom: [
+                   {
+                       show: true,
+                       realtime: true,
+                       start: 20,
+                       end: 85
+                   },
+                   {
+                       type: 'inside',
+                       realtime: true,
+                       start: 20,
+                       end: 85
+                   }
+               ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+</script>

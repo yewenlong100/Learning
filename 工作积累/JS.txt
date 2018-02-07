@@ -1,0 +1,83 @@
+$($('input[name=qtest]')[0]).is(':checked')
+$($('input[name=qtest]')[0]).prop("checked",false)
+
+
+权限全选
+$('input[type=checkbox]',$('#settings_cfgR')).prop('checked',true) 
+字段全选
+$('input[type=checkbox]',$('#settings_cfgC')).prop('checked',true)
+
+hide() -- show()
+滚动条自动定位
+tabDid.animate({scrollTop:(indDiv.offsetTop - 100)},"slow"); //定位tr 
+
+使CSS样式强制显示
+border-left: 1px red solid!important;
+
+
+/**
+ * 字符串转换为json对象
+ * 
+ * @param text
+ *            字符串
+ * @returns json对象
+ */
+str2json : function(data) {
+	try {
+		if ($.type(data) == 'string' && data != '') {
+			return eval('(' + $.trim(data) + ')');
+		} else
+			return data;
+	} catch (e) {
+		$('body').log(e + '. EM.str2json');
+		return {};
+	}
+}
+
+刷新选项卡
+$('ul.dropdown-menu-right').find('a[name=ref]').click();	
+
+展开所有树节点
+$('.center_close, .root_close, .bottom_close, .roots_close',$('#prostgtmp_prostgtmpInfo')).click();
+
+是否是真是鼠标点击事件
+event.isTrusted
+
+绿色 #008000    完工
+蓝色 #0000CC   加工中
+黄色 #FF6600   暂停
+红色 #FF0000	未开始
+
+计算DIV高度
+style="height:calc(100%-40px);"
+悬浮提示
+$('input').tooltip({
+		'title' : "this is toolTip!",
+		'placement' : 'left'
+	});
+
+数组是否包含	
+if($.inArray(suit, suits) == -1 && suit != '')
+	suits.push(suit);	
+	
+$this.val().replace(/[^0-9]/ig,'');//替换非数字
+i表示区分大小写。
+g表示进行全局匹配
+
+
+String.prototype.replaceAll = function (FindText, RepText) {
+    regExp = new RegExp(FindText, "g");
+    return this.replace(regExp, RepText);
+}	
+
+悬浮提示	
+#partDesignFlow1 #my-title{
+	position: fixed;
+	padding: 10px;
+	border-radius:3px;
+	background:rgba(0,0,0,.2);
+	z-index: 3;
+	color:#fff;
+	font-size: 1.2em;
+}
+	

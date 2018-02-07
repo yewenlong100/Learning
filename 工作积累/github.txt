@@ -1,0 +1,20 @@
+--设置名称
+git config --global user.name "yewenlong100"
+--设置账号
+git config --global user.email "1063963627@qq.com"
+--查看秘钥
+cd ~/.ssh
+--生成秘钥
+ssh-keygen -t rsa -C "1063963627@qq.com"
+
+--上传本地代码
+git init
+git add .
+git commit -m "提交文件"
+git remote add origin https://github.com/yewenlong100/Project.git
+git push -u origin master
+
+--SSL_ERROR_SYSCALL异常处理
+
+git config --global https.postBuffer 1048576000
+git config http.sslVerify "false"

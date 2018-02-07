@@ -1,0 +1,107 @@
+1、读取Json文件
+public Menu[] readSystemMenus() {
+		Menu[] menu = null;
+		try {
+			org.springframework.core.io.Resource res = new ClassPathResource("/resources/system/menus.x");
+			menu = this.json.getter().readValue(res.getFile(), Menu[].class);
+		} catch (IOException e) {
+			sys.error("读取系统菜单失败;", e);
+		}
+		return menu;
+	}
+2、图片加载
+@RequestMapping(value = "/10015", method = RequestMethod.GET)
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, BaseException {
+		Map<String, String> param = this.getParam2Map(request);
+
+		Filedata data = this.core.getFiledata(param);
+		if (data == null || data.getBytes() == null) {
+			sys.info("UUID[" + param + "] 无法获得附件信息!");
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+
+		byte[] bytes = data.getBytes();
+		String type = data.getFilesuff();
+		if (type != null)
+			type = type.trim().toLowerCase();
+		MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
+		if (".png".equals(type))
+			mediaType = MediaType.IMAGE_PNG;
+		else if (".jpeg".equals(type) || ".jpg".equals(type))
+			mediaType = MediaType.IMAGE_JPEG;
+		else if (".gif".equals(type))
+			mediaType = MediaType.IMAGE_GIF;
+
+		OutputStream outputStream = response.getOutputStream();
+		response.setContentType(mediaType.getType() + "; charset=utf-8");
+		if (mediaType == MediaType.APPLICATION_OCTET_STREAM) {
+			String name = URLEncoder.encode(data.getFilename(), "utf-8");
+			response.setHeader("Content-Disposition", "attachment; filename=" + name);
+		}
+
+		try {
+			if (bytes != null && bytes.length != 0)
+				outputStream.write(bytes);
+		} finally {
+			outputStream.close();
+			outputStream.flush();
+		}
+	}
+3、文件上传
+@RequestMapping(value = "/10022")
+	public String openGenExcelPage(HttpServletRequest request, Model model,
+			@RequestParam(value = "fileuuid", defaultValue = "") String fileuuid) throws Exception, IOException {
+		Filedata filedata = this.core.getFiledata(fileuuid);
+
+		Map<String, Object> data = ExcelUtil.readWorkbook2Objs(ExcelUtil.readExcel(
+				new ByteArrayInputStream(filedata.getBytes()), filedata.getFilesuff().endsWith(".xlsx") ? 2 : 1), 0);
+		for (String key : data.keySet())
+			data.put(key, BeanUtil.str(data.get(key)));
+
+		if (data.size() > 500) {
+			String sid = "X_" + BaseUtil.UUID12();
+			model.addAttribute("sid", sid);
+			WebUtil.setSessionAttr(request, sid, data);
+		} // 用于后续处理数据,大于500,页面仅传输编辑的数据,其它数据由session提供
+
+		model.addAttribute("xlsData", data);
+		model.addAttribute("param", WebUtil.getParam2Map(request));
+		model.addAttribute("rowCell", new int[] { ExcelUtil.getMaxRowsIndex(data), ExcelUtil.getMaxCellIndex(data) });
+		return "core/excel.htm";
+	}
+4、文件下载
+	@RequestMapping(value = "/10018", method = RequestMethod.GET)
+	public void exportGenFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String> param = this.getParam2Map(request);
+		if (param.get("rootpath") == null)
+			param.put("rootpath", System.getProperty("java.io.tmpdir"));
+
+		String fullpath = param.get("fullpath");
+		if (fullpath == null)
+			fullpath = param.get("rootpath") + "/" + param.get("filename");
+
+		String exet = "." + FilenameUtils.getExtension(fullpath);
+		String type = "application/octet-stream";
+		if (".xls".equals(exet))
+			type = "application/vnd.ms-excel";
+		else if (".zip".equals(exet))
+			type = "application/octet-stream";
+
+		String name = param.get("exportname");
+		if (name == null)
+			name = "download" + exet;
+		else
+			name = URLEncoder.encode(name, "utf-8");
+
+		OutputStream outputStream = response.getOutputStream();
+		response.setContentType(type + "; charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment; filename=" + name);
+		try {
+			outputStream.write(FileUtils.readFileToByteArray(new File(fullpath)));
+		} finally {
+			outputStream.flush();
+			outputStream.close();
+		}
+	}

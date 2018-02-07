@@ -1,0 +1,56 @@
+
+IF OBJECT_ID (N'dbo.AWBuildVersion', N'U') IS NOT NULL
+
+if OBJECT_ID('UQ__p_boms__3213D081703EA55A', 'UQ') is not null
+begin
+	alter table p_boms drop constraint UQ__p_boms__3213D081703EA55A;
+end;
+
+
+if COL_LENGTH('p_mwpiece_history', 'electrode') is not null
+begin
+	----修改是否为电极的数据类型
+		declare @DF varchar(100)
+		SET @DF=''
+		select ?@DF = a.name
+		from?sys.objects?a?inner?join?sys.columns?b?on?a.object_id=b.default_object_id
+		where?a.type='D'?
+		and?b.object_id=object_id('p_mwpiece_history') and ?b.Name='electrode'
+		PRINT(@DF)
+		EXEC('ALTER TABLE  [p_mwpiece_history]   DROP   constraint ' + @DF);
+		
+		ALTER TABLE [dbo].[p_mwpiece_history] ALTER COLUMN [electrode] int 
+end;
+GO
+
+
+select OBJECT_NAME(id)表名,name from syscolumns where name = 'operationCost'
+
+判断list是否存在
+<if test="stgIds != null and stgIds.size() > 0">
+	AND p_prostage.ordernums IN
+		<foreach collection="stgIds" item="item" index="index" open="(" separator="," close=")">
+		  #{item}
+		</foreach>
+</if>  		
+
+
+
+-- 启用    Ad Hoc Distributed Queries
+exec sp_configure 'show advanced options',1 
+reconfigure 
+exec sp_configure 'Ad Hoc Distributed Queries',1 
+reconfigure 
+
+--直接通过sql连接接口数据库
+
+SELECT
+	*
+FROM
+	OPENROWSET (
+		'SQLOLEDB',
+		'SERVER=192.168.1.65;UID=sa;PWD=123;Initial Catalog=Pubs',
+		'select * from ierp81.dbo.MuyeEmp'
+	) AS a
+
+

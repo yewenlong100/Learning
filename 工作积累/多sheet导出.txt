@@ -1,0 +1,18 @@
+		// 图片自定义批注接口
+		XlsCommentAreaBuilder.addCommandMapping("image", ImageCommand.class);
+		Context context = new Context();
+		context.putVar("gsm_parts", gsm_parts);
+		context.putVar("gsm_meta", gsm_meta);
+		context.putVar("project", project);
+		context.putVar("headers", looks);
+		context.putVar("datas", datas);
+		context.putVar("years", this.logic.getYear2Volume(project.getStarttime()));
+
+		String sourceFilePath = BaseUtil.getRealPath("/static/model/bominfo-ALL.xlsx");
+		
+		InputStream is = new FileInputStream(sourceFilePath);
+		OutputStream os = response.getOutputStream();
+		response.setContentType("application/vnd.ms-excel; charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment; filename=bominfo.xlsx");
+		
+		JxlsHelper.getInstance().processTemplate(is, os, context);
